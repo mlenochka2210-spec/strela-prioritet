@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>СТРЕЛА — Школа предпринимателей малого бизнеса</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    /* ── RESET & TOKENS ── */
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    :root {
+      --navy:    #000826;
+      --coral:   #F9504B;
+      --white:   #FFFFFF;
+      --gray-50: #F7F8FA;
+      --gray-100:#EFEFEF;
+      --gray-200:#E0E1E6;
+      --gray-400:#9BA3B2;
+      --gray-700:#3D4352;
+      --text:    #1A1A2E;
+      --radius:  14px;
+      --shadow:  0 8px 32px rgba(0,8,38,.1);
+    }
+    html { scroll-behavior:smooth; }
+    body { font-family:'Inter',sans-serif; background:var(--white); color:var(--text); overflow-x:hidden; }
+    h1,h2,h3,h4 { font-family:'Montserrat',sans-serif; font-weight:800; }
+    .container { max-width:1180px; margin:0 auto; padding:0 28px; }
+    img { display:block; max-width:100%; }
+    a { text-decoration:none; color:inherit; }
+
+    /* ── BUTTONS ── */
+    .btn {
+      display:inline-flex; align-items:center; gap:8px;
+      padding:17px 34px; border-radius:8px;
+      font-family:'Inter',sans-serif; font-size:15px; font-weight:700;
+      cursor:pointer; border:none; transition:all .22s ease;
+    }
+    .btn-coral { background:var(--coral); color:#fff; }
+    .btn-coral:hover { background:#e0342f; transform:translateY(-2px); box-shadow:0 10px 28px rgba(249,80,75,.35); }
+    .btn-navy  { background:var(--navy);  color:#fff; }
+    .btn-navy:hover  { background:#0e1733; transform:translateY(-2px); }
+    .btn-lg { padding:20px 42px; font-size:17px; }
+
+    /* ── TYPE HELPERS ── */
+    .eyebrow {
+      display:inline-block; font-size:11px; font-weight:700;
+      letter-spacing:.2em; text-transform:uppercase; color:var(--coral); margin-bottom:14px;
+    }
+    .section-h { font-size:clamp(28px,3.8vw,46px); color:var(--navy); line-height:1.12; }
+    .section-p { font-size:17px; color:var(--gray-400); line-height:1.75; margin-top:14px; }
+    .text-center { text-align:center; }
+
+    /* ══════════════════════════════════════
+       HEADER
+    ══════════════════════════════════════ */
+    #header {
+      position:fixed; top:0; left:0; right:0; z-index:200;
+      background:rgba(255,255,255,.96); backdrop-filter:blur(12px);
+      border-bottom:1px solid var(--gray-100); transition:box-shadow .25s;
+    }
+    #header.scrolled { box-shadow:0 4px 20px rgba(0,0,0,.07); }
+    .header-in { height:68px; display:flex; align-items:center; justify-content:space-between; gap:24px; }
+    .logo-group { display:flex; align-items:center; gap:18px; }
+    .logo-strela { font-family:'Montserrat',sans-serif; font-weight:900; font-size:19px; color:var(--navy); letter-spacing:.04em; }
+    .logo-strela em { color:var(--coral); font-style:normal; }
+    .logo-sep { width:1px; height:28px; background:var(--gray-200); }
+    .logo-pp { font-size:11px; font-weight:700; color:var(--gray-400); line-height:1.3; letter-spacing:.08em; text-transform:uppercase; }
+    nav.main { display:flex; align-items:center; gap:24px; }
+    nav.main a { font-size:14px; font-weight:500; color:var(--gray-700); transition:color .2s; }
+    nav.main a:hover { color:var(--coral); }
+    .btn-nav {
+      background:var(--navy); color:#fff !important; padding:9px 20px;
+      border-radius:7px; font-size:13px; font-weight:700;
+      transition:background .2s, transform .2s; cursor:pointer; border:none;
+    }
+    .btn-nav:hover { background:var(--coral); transform:translateY(-1px); }
+
+    /* ══════════════════════════════════════
+       HERO
+    ══════════════════════════════════════ */
+    #hero {
+      padding:130px 0 80px; background:var(--white);
+      min-height:100vh; display:flex; align-items:center;
+    }
+    .hero-grid { display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center; }
+    .hero-badge {
+      display:inline-flex; align-items:center; gap:8px;
+      background:var(--gray-50); border:1px solid var(--gray-200);
+      padding:6px 14px; border-radius:100px;
+      font-size:12px; font-weight:600; color:var(--gray-700); margin-bottom:24px;
+    }
+    .hero-badge span { width:7px; height:7px; border-radius:50%; background:var(--coral); animation:pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.4);opacity:.6} }
+
+    #hero h1 { font-size:clamp(32px,4vw,52px); line-height:1.08; color:var(--navy); }
+    #hero h1 em { color:var(--coral); font-style:normal; }
+    .hero-sub { font-size:17px; color:var(--gray-700); line-height:1.72; margin:20px 0 28px; }
+    .hero-start { display:flex; align-items:center; gap:10px; margin-bottom:28px; }
+    .hero-start-dot { width:9px; height:9px; border-radius:50%; background:var(--coral); animation:pulse 2s infinite; }
+    .hero-start-label { font-size:15px; font-weight:700; color:var(--navy); }
+
+    /* Countdown — compact, same height as button */
+    .countdown-box {
+      margin-top:14px;
+      display:inline-flex; align-items:center; gap:12px;
+      background:var(--navy); border-radius:8px;
+      padding:13px 20px;
+    }
+    .cd-label { font-size:13px; color:rgba(255,255,255,.6); white-space:nowrap; }
+    .cd-label strong { color:var(--coral); }
+    .cd-row { display:flex; align-items:center; gap:4px; }
+    .cd-unit { text-align:center; display:flex; align-items:baseline; gap:2px; }
+    .cd-num { font-family:'Montserrat',sans-serif; font-size:17px; font-weight:800; color:#fff; line-height:1; }
+    .cd-name { font-size:9px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:rgba(255,255,255,.4); }
+    .cd-sep { font-family:'Montserrat',sans-serif; font-size:15px; font-weight:800; color:var(--coral); line-height:1; }
+
+    /* Hero photo */
+    .hero-visual { position:relative; }
+    .hero-photo {
+      border-radius:20px; overflow:hidden; aspect-ratio:4/5;
+      background:var(--gray-50); box-shadow:var(--shadow);
+    }
+    .hero-photo img { width:100%; height:100%; object-fit:cover; object-position:center top; }
+    .hero-photo-ph {
+      width:100%; height:100%; min-height:460px;
+      background:linear-gradient(140deg,#000826 0%,#0e1733 100%);
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      color:rgba(255,255,255,.25); font-size:13px; text-align:center; gap:12px;
+    }
+
+    /* ══════════════════════════════════════
+       PAIN BLOCK
+    ══════════════════════════════════════ */
+    #pain { padding:100px 0; background:var(--gray-50); }
+    .pain-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:52px; }
+    .pain-card {
+      background:var(--white); border:1px solid var(--gray-200);
+      border-radius:var(--radius); padding:28px 24px;
+      transition:transform .22s, box-shadow .22s;
+    }
+    .pain-card:hover { transform:translateY(-5px); box-shadow:var(--shadow); }
+    .pain-icon {
+      width:42px; height:42px; border-radius:10px;
+      background:rgba(249,80,75,.1); display:flex; align-items:center;
+      justify-content:center; font-size:20px; margin-bottom:16px;
+    }
+    .pain-card p { font-size:14px; line-height:1.68; color:var(--gray-700); }
+
+    /* ══════════════════════════════════════
+       SEGMENTS / PORTRAITS
+    ══════════════════════════════════════ */
+    #segments { padding:100px 0; background:var(--white); }
+    .seg-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:24px; margin-top:56px; }
+    .seg-card {
+      border:1px solid var(--gray-200); border-radius:var(--radius);
+      overflow:hidden; background:var(--gray-50);
+      transition:transform .28s, box-shadow .28s;
+    }
+    .seg-card:hover { transform:translateY(-7px); box-shadow:0 20px 52px rgba(15,28,58,.12); }
+    .seg-card:hover .seg-title { color:var(--coral); }
+
+    /* Portrait illustration area */
+    .seg-vis {
+      height:220px; position:relative; overflow:hidden;
+      background:linear-gradient(135deg,#000826 0%,#0e1733 100%);
+      display:flex; align-items:center; justify-content:center;
+    }
+    .seg-vis svg { width:100%; height:100%; position:absolute; inset:0; }
+
+    .seg-body { padding:28px; }
+    .seg-title { font-family:'Montserrat',sans-serif; font-size:19px; font-weight:800; color:var(--navy); line-height:1.28; margin-bottom:12px; transition:color .25s; }
+    .seg-text { font-size:14px; color:var(--gray-400); line-height:1.65; }
+    .seg-divider { height:1px; background:var(--gray-200); margin:16px 0; }
+    .seg-tag { font-size:11px; font-weight:700; color:var(--navy); letter-spacing:.1em; text-transform:uppercase; margin-bottom:6px; }
+    .seg-result {
+      margin-top:14px; padding:14px 16px;
+      background:rgba(249,80,75,.07); border-left:3px solid var(--coral);
+      border-radius:0 8px 8px 0;
+    }
+    .seg-result-label { font-size:11px; font-weight:700; color:var(--coral); letter-spacing:.1em; text-transform:uppercase; margin-bottom:6px; }
+    .seg-result p { font-size:14px; line-height:1.6; color:var(--text); }
+    .seg-cta { text-align:center; margin-top:56px; }
+    .seg-cta p { font-size:20px; font-weight:700; color:var(--navy); margin-bottom:22px; }
+
+    /* ══════════════════════════════════════
+       STEPS (What Changes)
+    ══════════════════════════════════════ */
+    #steps { padding:100px 0; background:var(--navy); }
+    #steps .eyebrow { color:var(--coral); }
+    #steps .section-h { color:#fff; }
+    #steps .section-p { color:rgba(255,255,255,.6); }
+    .steps-list { margin-top:60px; }
+    .step-row {
+      display:grid; grid-template-columns:96px 1fr; gap:40px;
+      padding:52px 0; border-bottom:1px solid rgba(255,255,255,.07); align-items:start;
+    }
+    .step-row:last-child { border-bottom:none; }
+    .step-n { font-family:'Montserrat',sans-serif; font-size:68px; font-weight:900; color:rgba(255,255,255,.1); line-height:1; }
+    .step-h { font-family:'Montserrat',sans-serif; font-size:22px; font-weight:800; color:#fff; margin-bottom:12px; }
+    .step-p { font-size:15px; line-height:1.72; color:rgba(255,255,255,.6); margin-bottom:16px; }
+    .step-result {
+      display:flex; gap:12px; align-items:flex-start;
+      background:rgba(249,80,75,.13); border-radius:9px; padding:14px 16px;
+    }
+    .step-arr { color:var(--coral); font-size:18px; font-weight:800; flex-shrink:0; line-height:1.4; }
+    .step-result p { font-size:14px; line-height:1.58; color:rgba(255,255,255,.82); }
+    .steps-cta { text-align:center; margin-top:60px; }
+
+    /* ══════════════════════════════════════
+       CALENDAR
+    ══════════════════════════════════════ */
+    #calendar { padding:100px 0; background:var(--white); }
+    .cal-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:56px; }
+    .cal-card { border:1px solid var(--gray-200); border-radius:var(--radius); overflow:hidden; transition:transform .22s, box-shadow .22s; }
+    .cal-card:hover { transform:translateY(-4px); box-shadow:var(--shadow); }
+
+    .cal-head { background:var(--navy); padding:18px 22px; }
+    .cal-card.finale .cal-head { background:linear-gradient(135deg,#000826 0%,#0e1733 100%); }
+    .cal-wk { font-size:11px; font-weight:700; letter-spacing:.15em; text-transform:uppercase; color:var(--coral); margin-bottom:4px; }
+    .cal-dates { font-family:'Montserrat',sans-serif; font-size:18px; font-weight:800; color:#fff; }
+    .cal-theme { font-size:13px; color:rgba(255,255,255,.6); margin-top:4px; }
+    .cal-body { background:var(--white); padding:20px 22px; }
+    .cal-card.finale .cal-body { background:var(--white); }
+    .cal-event { padding:14px 0; border-bottom:1px solid var(--gray-100); }
+    .cal-event:last-child { border:none; padding-bottom:0; }
+    .cal-event-type { font-size:10px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--coral); margin-bottom:5px; }
+    .cal-event-title { font-size:14px; font-weight:600; color:var(--text); line-height:1.45; margin-bottom:6px; }
+    .cal-event-speaker { font-size:13px; font-weight:700; color:var(--navy); }
+    .cal-event-time { font-size:12px; color:var(--gray-400); margin-top:2px; }
+    .finale-text h3 { font-size:16px; font-weight:800; color:var(--text); margin-bottom:8px; }
+    .finale-text p { font-size:14px; color:var(--gray-400); line-height:1.6; }
+    .cal-cta { text-align:center; margin-top:44px; }
+
+    /* ══════════════════════════════════════
+       AUTHORS
+    ══════════════════════════════════════ */
+    #authors { padding:100px 0; background:var(--gray-50); }
+    .authors-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:36px; margin-top:56px; }
+    .author-card {
+      background:var(--white); border:1px solid var(--gray-200);
+      border-radius:var(--radius); overflow:hidden;
+      display:grid; grid-template-columns:200px 1fr;
+    }
+    .author-photo { position:relative; min-height:320px; background:linear-gradient(140deg,#000826,#0e1733); }
+    .author-photo img { width:100%; height:100%; object-fit:cover; object-position:top center; }
+    .author-photo-ph { width:100%; height:100%; display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,.2); font-size:13px; }
+    .author-body { padding:32px; }
+    .author-name { font-family:'Montserrat',sans-serif; font-size:21px; font-weight:800; color:var(--navy); margin-bottom:6px; }
+    .author-role { font-size:12px; font-weight:700; color:var(--coral); letter-spacing:.06em; text-transform:uppercase; margin-bottom:20px; }
+    .author-list { list-style:none; display:flex; flex-direction:column; gap:10px; margin-bottom:24px; }
+    .author-list li { display:flex; gap:10px; font-size:14px; line-height:1.52; color:var(--text); }
+    .author-list li::before { content:'→'; color:var(--coral); font-weight:800; flex-shrink:0; }
+    .btn-contact {
+      display:inline-flex; align-items:center; gap:8px;
+      background:var(--coral); color:#fff;
+      padding:11px 22px; border-radius:7px;
+      font-size:13px; font-weight:700; transition:all .22s; border:none; cursor:pointer;
+    }
+    .btn-contact:hover { background:#e0342f; transform:translateY(-2px); box-shadow:0 8px 20px rgba(249,80,75,.35); }
+
+    /* ══════════════════════════════════════
+       BONUSES (moved before FAQ)
+    ══════════════════════════════════════ */
+    #bonuses { padding:100px 0; background:var(--white); }
+    .bonuses-grid { display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center; }
+    .bonus-list { list-style:none; display:flex; flex-direction:column; gap:16px; margin:28px 0 36px; }
+    .bonus-list li { display:flex; align-items:flex-start; gap:14px; font-size:15px; line-height:1.55; color:var(--text); }
+    .bonus-ico { width:24px; height:24px; background:var(--coral); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; flex-shrink:0; margin-top:1px; }
+    .bonuses-photo { border-radius:var(--radius); overflow:hidden; aspect-ratio:4/5; }
+    .bonuses-photo img { width:100%; height:100%; object-fit:cover; object-position:center top; }
+    .bonuses-photo-ph {
+      width:100%; height:100%; min-height:400px;
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      background:linear-gradient(140deg,#000826,#0e1733);
+      color:rgba(255,255,255,.2); font-size:13px; text-align:center; gap:10px;
+    }
+
+    /* ══════════════════════════════════════
+       FAQ (moved after Bonuses)
+    ══════════════════════════════════════ */
+    #faq { padding:100px 0; background:var(--gray-50); }
+    .faq-list { margin-top:56px; border:1px solid var(--gray-200); border-radius:var(--radius); overflow:hidden; }
+    .faq-item { border-bottom:1px solid var(--gray-200); }
+    .faq-item:last-child { border:none; }
+    .faq-q { display:flex; align-items:center; justify-content:space-between; gap:24px; padding:24px 32px; cursor:pointer; background:var(--white); transition:background .2s; }
+    .faq-q:hover { background:var(--gray-50); }
+    .faq-q-text { font-family:'Montserrat',sans-serif; font-size:16px; font-weight:700; color:var(--navy); }
+    .faq-ico { width:32px; height:32px; border-radius:50%; background:var(--navy); color:#fff; display:flex; align-items:center; justify-content:center; font-size:20px; font-weight:300; flex-shrink:0; line-height:1; transition:background .22s, transform .3s; }
+    .faq-item.open .faq-ico { background:var(--coral); transform:rotate(45deg); }
+    .faq-a { max-height:0; overflow:hidden; transition:max-height .4s ease; }
+    .faq-item.open .faq-a { max-height:500px; }
+    .faq-a-in { padding:0 32px 26px; font-size:15px; line-height:1.78; color:var(--gray-700); }
+
+    /* ══════════════════════════════════════
+       MODAL / POPUP FORM
+    ══════════════════════════════════════ */
+    .modal-overlay {
+      position:fixed; inset:0; z-index:1000;
+      background:rgba(15,28,58,.55); backdrop-filter:blur(6px);
+      opacity:0; pointer-events:none; transition:opacity .3s ease;
+    }
+    .modal-overlay.open { opacity:1; pointer-events:all; }
+
+    .modal-box {
+      position:fixed; z-index:1001;
+      top:50%; left:50%; transform:translate(-50%,-46%);
+      width:min(600px, calc(100vw - 32px));
+      max-height:90vh; overflow-y:auto;
+      background:var(--white); border-radius:20px;
+      padding:48px 44px;
+      opacity:0; pointer-events:none;
+      transition:opacity .3s ease, transform .3s ease;
+    }
+    .modal-box.open { opacity:1; pointer-events:all; transform:translate(-50%,-50%); }
+
+    .modal-close {
+      position:absolute; top:20px; right:20px;
+      width:36px; height:36px; border-radius:50%;
+      background:var(--gray-100); border:none; cursor:pointer;
+      font-size:20px; line-height:1; color:var(--gray-700);
+      display:flex; align-items:center; justify-content:center;
+      transition:background .2s;
+    }
+    .modal-close:hover { background:var(--gray-200); }
+
+    .modal-scarcity {
+      display:inline-flex; align-items:center; gap:8px;
+      background:rgba(249,80,75,.1); color:var(--coral);
+      padding:7px 16px; border-radius:100px; font-size:13px; font-weight:700;
+      margin-bottom:18px;
+    }
+    .scarcity-dot { width:8px; height:8px; background:var(--coral); border-radius:50%; animation:pulse 1.5s infinite; }
+
+    .modal-h { font-size:clamp(22px,3vw,28px); color:var(--navy); margin-bottom:6px; }
+    .modal-p { font-size:15px; color:var(--gray-400); line-height:1.6; margin-bottom:28px; }
+
+    .form-row2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .fg { margin-bottom:16px; }
+    .fg label { display:block; font-size:13px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .fg input, .fg select {
+      width:100%; padding:15px 18px;
+      border:1.5px solid var(--gray-200); border-radius:8px;
+      font-size:15px; font-family:'Inter',sans-serif; color:var(--text);
+      background:var(--white); outline:none; transition:border-color .2s;
+    }
+    .fg input:focus, .fg select:focus { border-color:var(--navy); }
+    .form-sub { margin-top:20px; display:flex; flex-direction:column; gap:12px; }
+    .form-sub .btn { justify-content:center; width:100%; padding:18px; font-size:16px; }
+    .form-legal { font-size:12px; color:var(--gray-400); text-align:center; line-height:1.5; }
+    .form-legal a { color:var(--navy); text-decoration:underline; }
+
+    /* ══════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════ */
+    #footer { background:var(--navy); color:#fff; padding:64px 0 40px; }
+    .footer-top { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:40px; padding-bottom:48px; border-bottom:1px solid rgba(255,255,255,.1); }
+
+    /* Logo block */
+    .footer-brand {}
+    .footer-logo-wrap { display:flex; align-items:center; gap:14px; margin-bottom:14px; }
+    .footer-arrow-icon { flex-shrink:0; }
+    .footer-logo-text {}
+    .footer-logo-name { font-family:'Montserrat',sans-serif; font-weight:900; font-size:20px; color:#fff; letter-spacing:.04em; line-height:1.1; }
+    .footer-logo-name em { color:var(--coral); font-style:normal; }
+    .footer-logo-sub { font-size:12px; color:rgba(255,255,255,.45); line-height:1.4; margin-top:4px; }
+    .footer-tg-btn {
+      display:inline-flex; align-items:center; gap:8px;
+      background:#2AABEE; color:#fff;
+      padding:11px 20px; border-radius:8px;
+      font-size:14px; font-weight:700; margin-top:18px;
+      transition:background .2s, transform .2s;
+    }
+    .footer-tg-btn:hover { background:#1d96d7; transform:translateY(-1px); }
+    .footer-tg-icon { width:18px; height:18px; flex-shrink:0; }
+
+    .footer-col h4 { font-size:11px; font-weight:700; letter-spacing:.15em; text-transform:uppercase; color:rgba(255,255,255,.35); margin-bottom:16px; }
+    .footer-col ul { list-style:none; display:flex; flex-direction:column; gap:10px; }
+    .footer-col ul li a { font-size:14px; color:rgba(255,255,255,.65); transition:color .2s; }
+    .footer-col ul li a:hover { color:var(--coral); }
+
+    /* Footer bottom */
+    .footer-btm { padding-top:32px; display:flex; flex-direction:column; gap:16px; }
+    .footer-legal { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px; }
+    .footer-legal-text { font-size:12px; color:rgba(255,255,255,.3); line-height:1.6; }
+    .footer-legal-text a { color:rgba(255,255,255,.5); text-decoration:underline; transition:color .2s; }
+    .footer-legal-text a:hover { color:var(--coral); }
+    .footer-contacts { font-size:12px; color:rgba(255,255,255,.35); line-height:1.8; }
+    .footer-contacts a { color:rgba(255,255,255,.5); transition:color .2s; }
+    .footer-contacts a:hover { color:var(--coral); }
+
+    /* ══════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════ */
+    @media (max-width:900px) {
+      .hero-grid { grid-template-columns:1fr; }
+      .hero-visual { order:-1; }
+      .hero-photo { aspect-ratio:4/3; }
+nav.main { display:none; }
+      .pain-grid { grid-template-columns:1fr 1fr; }
+      .seg-grid { grid-template-columns:1fr; }
+      .authors-grid { grid-template-columns:1fr; }
+      .author-card { grid-template-columns:1fr; }
+      .author-photo { min-height:240px; }
+      .bonuses-grid { grid-template-columns:1fr; }
+      .cal-grid { grid-template-columns:1fr 1fr; }
+      .footer-top { grid-template-columns:1fr 1fr; gap:28px; }
+      .footer-brand { grid-column:span 2; }
+      .modal-box { padding:32px 24px; }
+    }
+    @media (max-width:560px) {
+      .pain-grid { grid-template-columns:1fr; }
+      .form-row2 { grid-template-columns:1fr; }
+      .cal-grid { grid-template-columns:1fr; }
+      .step-row { grid-template-columns:56px 1fr; gap:20px; }
+      .step-n { font-size:44px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     MODAL OVERLAY + POPUP FORM
+══════════════════════════════════════ -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal()"></div>
+
+<div class="modal-box" id="modal-box" role="dialog" aria-modal="true">
+  <button class="modal-close" onclick="closeModal()" aria-label="Закрыть">×</button>
+
+  <div class="modal-scarcity">
+    <div class="scarcity-dot"></div>
+    <strong>Осталось 3 места</strong>&nbsp;на ближайший поток
+  </div>
+
+  <h2 class="modal-h">Записаться на диагностику</h2>
+  <p class="modal-p">За 30 минут разберём вашу ситуацию и ответим на все вопросы</p>
+
+  <form id="mainForm" onsubmit="handleSubmit(event)">
+    <div class="form-row2">
+      <div class="fg">
+        <label for="f-name">Ваше имя</label>
+        <input type="text" id="f-name" name="name" placeholder="Иван Иванов" required>
+      </div>
+      <div class="fg">
+        <label for="f-phone">Телефон</label>
+        <input type="tel" id="f-phone" name="phone" placeholder="+7 (999) 000-00-00" required>
+      </div>
+    </div>
+    <div class="fg">
+      <label for="f-site">Сайт компании</label>
+      <input type="url" id="f-site" name="website" placeholder="https://yourcompany.ru">
+    </div>
+    <div class="fg">
+      <label for="f-revenue">Годовой оборот</label>
+      <select id="f-revenue" name="revenue" required>
+        <option value="" disabled selected>Выберите оборот</option>
+        <option value="lt10">До 10 млн ₽</option>
+        <option value="10-30">10–30 млн ₽</option>
+        <option value="30-100">30–100 млн ₽</option>
+        <option value="100-300">100–300 млн ₽</option>
+        <option value="gt300">Более 300 млн ₽</option>
+      </select>
+    </div>
+    <div class="form-sub">
+      <button type="submit" class="btn btn-coral">Записаться на диагностику →</button>
+      <div class="form-legal">Нажимая кнопку, вы соглашаетесь с <a href="#">политикой обработки персональных данных</a></div>
+    </div>
+  </form>
+</div>
+
+<!-- ══════════════════════════════════════
+     HEADER
+══════════════════════════════════════ -->
+<header id="header">
+  <div class="container">
+    <div class="header-in">
+      <div class="logo-group">
+        <a href="#hero" class="logo-strela">» СТРЕЛА <em>→</em></a>
+        <div class="logo-sep"></div>
+        <div class="logo-pp">Paper<br>Planes</div>
+      </div>
+      <nav class="main">
+        <a href="#segments">Для кого?</a>
+        <a href="#steps">Что изменится?</a>
+        <a href="#calendar">Формат</a>
+        <a href="#authors">Авторы</a>
+        <a href="#faq">FAQ</a>
+        <button class="btn-nav" onclick="openModal()">Консультация</button>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════════════════════════════════
+     HERO
+══════════════════════════════════════ -->
+<section id="hero">
+  <div class="container">
+    <div class="hero-grid">
+
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span></span>
+          Новый поток · Старт 12 мая
+        </div>
+
+        <h1>ПРИОРИТЕТ — <em>5-недельный интенсив</em> для собственников бизнеса</h1>
+        <p class="hero-sub">Это интенсив для тех, кто не хочет больше жить в хаосе и готов по‑настоящему быть предпринимателем. Строим систему роста в 2026 году. Атакуем рынок, пока конкуренты выбирают оборону.</p>
+
+        <button class="btn btn-coral btn-lg" onclick="openModal()">Записаться на диагностику →</button>
+
+        <div class="countdown-box">
+          <div class="cd-label">Скидка <strong>20%</strong> до 30 апреля</div>
+          <div class="cd-row">
+            <div class="cd-unit"><span class="cd-num" id="cd-d">00</span><span class="cd-name">д</span></div>
+            <div class="cd-sep">:</div>
+            <div class="cd-unit"><span class="cd-num" id="cd-h">00</span><span class="cd-name">ч</span></div>
+            <div class="cd-sep">:</div>
+            <div class="cd-unit"><span class="cd-num" id="cd-m">00</span><span class="cd-name">м</span></div>
+            <div class="cd-sep">:</div>
+            <div class="cd-unit"><span class="cd-num" id="cd-s">00</span><span class="cd-name">с</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- HERO PHOTO: совместное фото Ильи и Андрея -->
+      <div class="hero-visual">
+        <div class="hero-photo">
+          <img id="hero-img" alt="Илья Балахнин и Андрей Муравьев">
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     PAIN BLOCK
+══════════════════════════════════════ -->
+<section id="pain">
+  <div class="container">
+    <div class="eyebrow">Практикум будет вам полезен</div>
+    <h2 class="section-h">Узнаёте свой рабочий день?</h2>
+    <p class="section-p">Если хотя бы 3 из 9 пунктов — про вас, эта программа именно для вас.</p>
+
+    <div class="pain-grid">
+      <div class="pain-card"><div class="pain-icon">🔋</div><p>Вы — единственная батарейка, на которой держится вся компания. Если вы отключитесь, всё встанет.</p></div>
+      <div class="pain-card"><div class="pain-icon">🙋</div><p>Команда не берёт ответственность, по любому чиху бегут к вам, а вы работаете за них.</p></div>
+      <div class="pain-card"><div class="pain-icon">💸</div><p>Сначала платите всем (аренда, налоги, зарплаты), а себе — что останется в кассе.</p></div>
+      <div class="pain-card"><div class="pain-icon">📊</div><p>Вы работаете 24/7, но оборот и прибыль не растут уже месяцами (или годами).</p></div>
+      <div class="pain-card"><div class="pain-icon">🔥</div><p>Весь день уходит на решение мелких факапов, а на стратегию и развитие не остаётся ни сил, ни времени.</p></div>
+      <div class="pain-card"><div class="pain-icon">😰</div><p>Боитесь уволить неэффективного «топа», потому что на нём завязаны ключевые процессы.</p></div>
+      <div class="pain-card"><div class="pain-icon">🎲</div><p>Решения принимаются на интуиции, а не на цифрах. Вы не знаете точно, сколько заработаете в следующем месяце.</p></div>
+      <div class="pain-card"><div class="pain-icon">📋</div><p>Нет чётких инструкций — задачи теряются, срываются сроки, клиенты уходят недовольными.</p></div>
+      <div class="pain-card"><div class="pain-icon">😤</div><p>Чтобы заработать больше, нужно работать ещё больше, но личный ресурс уже на пределе.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     SEGMENTS / PORTRAITS
+══════════════════════════════════════ -->
+<section id="segments">
+  <div class="container">
+    <div class="eyebrow">Для кого эта программа</div>
+    <h2 class="section-h">Для собственников, которые уже вывезли выручку,<br>но застряли в операционке и постоянных «пожарах»</h2>
+    <p class="section-p" style="max-width:720px;">Постоянные «пожары», задачи, которые никто не делает кроме вас, и ощущение, что бизнес работает только пока вы — внутри. Узнаёте?</p>
+
+    <div class="seg-grid">
+
+      <!-- Portrait 1: Оркестр -->
+      <div class="seg-card">
+        <div class="seg-vis">
+          <!-- Illustration: phone chaos / многорукий предприниматель -->
+          <svg viewBox="0 0 480 220" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+            <rect width="480" height="220" fill="url(#g1)"/>
+            <defs>
+              <linearGradient id="g1" x1="0" y1="0" x2="480" y2="220" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#000826"/><stop offset="1" stop-color="#0e1733"/>
+              </linearGradient>
+            </defs>
+            <!-- Silhouette: person with many arms/phones -->
+            <!-- Body -->
+            <ellipse cx="240" cy="185" rx="42" ry="18" fill="rgba(255,255,255,0.06)"/>
+            <rect x="218" y="115" width="44" height="70" rx="10" fill="rgba(255,255,255,0.12)"/>
+            <!-- Head -->
+            <circle cx="240" cy="90" r="28" fill="rgba(255,255,255,0.14)"/>
+            <!-- Many arms with phones -->
+            <!-- Left arms -->
+            <line x1="220" y1="130" x2="155" y2="100" stroke="rgba(255,255,255,0.2)" stroke-width="8" stroke-linecap="round"/>
+            <rect x="130" y="87" width="30" height="20" rx="4" fill="#F9504B" opacity=".85"/>
+            <line x1="220" y1="140" x2="148" y2="140" stroke="rgba(255,255,255,0.2)" stroke-width="8" stroke-linecap="round"/>
+            <rect x="122" y="130" width="30" height="20" rx="4" fill="#F9504B" opacity=".7"/>
+            <line x1="220" y1="150" x2="155" y2="175" stroke="rgba(255,255,255,0.2)" stroke-width="8" stroke-linecap="round"/>
+            <rect x="128" y="163" width="30" height="20" rx="4" fill="#F9504B" opacity=".6"/>
+            <!-- Right arms -->
+            <line x1="260" y1="130" x2="325" y2="100" stroke="rgba(255,255,255,0.2)" stroke-width="8" stroke-linecap="round"/>
+            <rect x="320" y="87" width="30" height="20" rx="4" fill="#F9504B" opacity=".85"/>
+            <line x1="260" y1="140" x2="332" y2="140" stroke="rgba(255,255,255,0.2)" stroke-width="8" stroke-linecap="round"/>
+            <rect x="328" y="130" width="30" height="20" rx="4" fill="#F9504B" opacity=".7"/>
+            <line x1="260" y1="150" x2="325" y2="175" stroke="rgba(255,255,255,0.2)" stroke-width="8" stroke-linecap="round"/>
+            <rect x="322" y="163" width="30" height="20" rx="4" fill="#F9504B" opacity=".6"/>
+            <!-- Notification dots -->
+            <circle cx="157" cy="88" r="6" fill="#F9504B"/>
+            <circle cx="350" cy="88" r="6" fill="#F9504B"/>
+            <circle cx="152" cy="130" r="5" fill="#ff9f43" opacity=".9"/>
+            <!-- Tabs / browser icons above head -->
+            <rect x="180" y="44" width="22" height="14" rx="3" fill="rgba(249,80,75,.5)"/>
+            <rect x="208" y="38" width="22" height="14" rx="3" fill="rgba(255,255,255,.2)"/>
+            <rect x="236" y="42" width="22" height="14" rx="3" fill="rgba(249,80,75,.35)"/>
+            <rect x="264" y="36" width="22" height="14" rx="3" fill="rgba(255,255,255,.15)"/>
+            <text x="240" y="15" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-family="Inter,sans-serif" font-size="11" letter-spacing="2">ПОСТОЯННО ЗАНЯТ</text>
+          </svg>
+        </div>
+        <div class="seg-body">
+          <div class="seg-title">Предприниматель-оркестр, на котором держится всё</div>
+          <div class="seg-divider"></div>
+          <div class="seg-tag">Главная боль</div>
+          <p class="seg-text">Вы замыкаете всё на себе: и продажи, и HR, и мелкие задачи. Бизнес держится только на вашей личной энергии, как старый паровоз.</p>
+          <div class="seg-result">
+            <div class="seg-result-label">Что изменится</div>
+            <p>Вы перестанете быть «узким горлышком». Мы поможем настроить процессы так, чтобы компания работала без вашего круглосуточного участия.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Portrait 2: Спасатель -->
+      <div class="seg-card">
+        <div class="seg-vis">
+          <svg viewBox="0 0 480 220" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+            <rect width="480" height="220" fill="url(#g2)"/>
+            <defs>
+              <linearGradient id="g2" x1="0" y1="0" x2="480" y2="220" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#000826"/><stop offset="1" stop-color="#0e1733"/>
+              </linearGradient>
+            </defs>
+            <!-- Desk with papers and laptop -->
+            <rect x="80" y="155" width="320" height="8" rx="4" fill="rgba(255,255,255,0.08)"/>
+            <!-- Papers scattered -->
+            <rect x="90" y="120" width="70" height="36" rx="3" fill="rgba(255,255,255,.1)" transform="rotate(-8 90 120)"/>
+            <rect x="110" y="115" width="70" height="36" rx="3" fill="rgba(255,255,255,.07)" transform="rotate(4 110 115)"/>
+            <rect x="310" y="118" width="70" height="36" rx="3" fill="rgba(255,255,255,.1)" transform="rotate(6 310 118)"/>
+            <rect x="295" y="125" width="70" height="36" rx="3" fill="rgba(255,255,255,.07)" transform="rotate(-5 295 125)"/>
+            <!-- Laptop -->
+            <rect x="185" y="105" width="110" height="70" rx="6" fill="rgba(255,255,255,.12)"/>
+            <rect x="190" y="110" width="100" height="56" rx="4" fill="rgba(15,28,58,.8)"/>
+            <!-- Screen: chart going nowhere -->
+            <polyline points="200,148 215,135 230,142 245,128 260,138 275,132 280,132" stroke="#F9504B" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            <!-- Coins leaving -->
+            <circle cx="140" cy="80" r="14" fill="rgba(249,80,75,.2)" stroke="#F9504B" stroke-width="1.5"/>
+            <text x="140" y="85" text-anchor="middle" fill="#F9504B" font-size="12" font-weight="bold">₽</text>
+            <circle cx="340" cy="75" r="14" fill="rgba(249,80,75,.2)" stroke="#F9504B" stroke-width="1.5"/>
+            <text x="340" y="80" text-anchor="middle" fill="#F9504B" font-size="12" font-weight="bold">₽</text>
+            <circle cx="380" cy="95" r="10" fill="rgba(249,80,75,.15)" stroke="#F9504B" stroke-width="1"/>
+            <text x="380" y="100" text-anchor="middle" fill="#F9504B" font-size="10" font-weight="bold">₽</text>
+            <!-- Question mark -->
+            <text x="240" y="85" text-anchor="middle" fill="rgba(255,255,255,0.15)" font-family="Montserrat,sans-serif" font-size="52" font-weight="900">?</text>
+            <text x="240" y="15" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-family="Inter,sans-serif" font-size="11" letter-spacing="2">ГДЕ МОИ ДЕНЬГИ?</text>
+          </svg>
+        </div>
+        <div class="seg-body">
+          <div class="seg-title">Предприниматель-спасатель, который кормит команду, арендодателей и налоги, но забывает про себя</div>
+          <div class="seg-divider"></div>
+          <div class="seg-tag">Главная боль</div>
+          <p class="seg-text">Команда что-то делает, процессы идут, но чистая прибыль стоит на месте или растёт непропорционально усилиям.</p>
+          <div class="seg-result">
+            <div class="seg-result-label">Что изменится</div>
+            <p>Вы сфокусируетесь на цифрах и действиях, которые реально приносят чистую прибыль, а не «имитации бурной деятельности».</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Portrait 3: Директор пожаров -->
+      <div class="seg-card">
+        <div class="seg-vis">
+          <svg viewBox="0 0 480 220" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+            <rect width="480" height="220" fill="url(#g3)"/>
+            <defs>
+              <linearGradient id="g3" x1="0" y1="0" x2="480" y2="220" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#000826"/><stop offset="1" stop-color="#0e1733"/>
+              </linearGradient>
+              <radialGradient id="fire1" cx="50%" cy="100%" r="60%">
+                <stop offset="0%" stop-color="#F9504B" stop-opacity=".35"/>
+                <stop offset="100%" stop-color="#F9504B" stop-opacity="0"/>
+              </radialGradient>
+            </defs>
+            <!-- Fire glow background -->
+            <ellipse cx="150" cy="190" rx="80" ry="50" fill="url(#fire1)"/>
+            <ellipse cx="330" cy="190" rx="80" ry="50" fill="url(#fire1)"/>
+            <!-- Flames left -->
+            <path d="M120,185 Q128,155 140,145 Q135,165 145,155 Q150,135 165,120 Q158,150 168,138 Q175,115 185,110 Q178,140 185,155 Q190,140 198,135 Q192,158 188,175 Q175,190 150,190 Z" fill="#F9504B" opacity=".6"/>
+            <path d="M130,185 Q138,163 148,155 Q143,170 152,162 Q158,148 168,140 Q162,158 170,148 Q178,185 155,190 Z" fill="#ff9f43" opacity=".5"/>
+            <!-- Flames right -->
+            <path d="M295,185 Q303,155 315,145 Q310,165 320,155 Q325,135 340,120 Q333,150 343,138 Q350,115 360,110 Q353,140 360,155 Q365,140 373,135 Q367,158 363,175 Q350,190 325,190 Z" fill="#F9504B" opacity=".6"/>
+            <path d="M305,185 Q313,163 323,155 Q318,170 327,162 Q333,148 343,140 Q337,158 345,148 Q353,185 330,190 Z" fill="#ff9f43" opacity=".5"/>
+            <!-- Person running silhouette -->
+            <circle cx="240" cy="75" r="22" fill="rgba(255,255,255,0.15)"/>
+            <rect x="228" y="97" width="24" height="50" rx="8" fill="rgba(255,255,255,0.12)"/>
+            <!-- Arms running -->
+            <line x1="228" y1="115" x2="200" y2="95" stroke="rgba(255,255,255,0.15)" stroke-width="8" stroke-linecap="round"/>
+            <line x1="252" y1="115" x2="275" y2="100" stroke="rgba(255,255,255,0.15)" stroke-width="8" stroke-linecap="round"/>
+            <!-- Legs running -->
+            <line x1="235" y1="147" x2="215" y2="175" stroke="rgba(255,255,255,0.15)" stroke-width="8" stroke-linecap="round"/>
+            <line x1="245" y1="147" x2="265" y2="175" stroke="rgba(255,255,255,0.15)" stroke-width="8" stroke-linecap="round"/>
+            <!-- Alert icon -->
+            <circle cx="240" cy="35" r="14" fill="rgba(249,80,75,.3)" stroke="#F9504B" stroke-width="1.5"/>
+            <text x="240" y="41" text-anchor="middle" fill="#F9504B" font-size="16" font-weight="bold">!</text>
+            <text x="240" y="15" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-family="Inter,sans-serif" font-size="11" letter-spacing="2">РЕЖИМ ПОЖАРА</text>
+          </svg>
+        </div>
+        <div class="seg-body">
+          <div class="seg-title">Директор по тушению пожаров, который вместо стратегии управляет хаосом в ручном режиме</div>
+          <div class="seg-divider"></div>
+          <div class="seg-tag">Главная боль</div>
+          <p class="seg-text">Команда из 5–30 человек, а порядка нет. Решения принимаете интуитивно, в ответ на очередную проблему.</p>
+          <div class="seg-result">
+            <div class="seg-result-label">Что изменится</div>
+            <p>Вы перейдёте от реактивного управления к системному. Появятся дашборды, чёткие метрики и предсказуемый ритм работы команды.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Portrait 4: Вырос из бизнеса -->
+      <div class="seg-card">
+        <div class="seg-vis">
+          <svg viewBox="0 0 480 220" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+            <rect width="480" height="220" fill="url(#g4)"/>
+            <defs>
+              <linearGradient id="g4" x1="0" y1="0" x2="480" y2="220" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#000826"/><stop offset="1" stop-color="#0e1733"/>
+              </linearGradient>
+            </defs>
+            <!-- Grid lines -->
+            <line x1="80" y1="50" x2="80" y2="175" stroke="rgba(255,255,255,.06)" stroke-width="1"/>
+            <line x1="80" y1="175" x2="400" y2="175" stroke="rgba(255,255,255,.06)" stroke-width="1"/>
+            <line x1="80" y1="130" x2="400" y2="130" stroke="rgba(255,255,255,.04)" stroke-width="1" stroke-dasharray="4,4"/>
+            <line x1="80" y1="100" x2="400" y2="100" stroke="rgba(255,255,255,.04)" stroke-width="1" stroke-dasharray="4,4"/>
+            <!-- Growth line hitting ceiling -->
+            <polyline points="90,170 130,155 170,140 210,120 250,100 290,85 310,80 310,80" stroke="#F9504B" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <!-- Ceiling / glass ceiling bar -->
+            <rect x="80" y="58" width="320" height="6" rx="3" fill="rgba(255,255,255,.2)"/>
+            <text x="400" y="57" text-anchor="end" fill="rgba(255,255,255,.3)" font-size="10" font-family="Inter,sans-serif">ПОТОЛОК</text>
+            <!-- Arrow hitting ceiling -->
+            <line x1="310" y1="80" x2="310" y2="66" stroke="#F9504B" stroke-width="3" stroke-linecap="round"/>
+            <polygon points="310,58 303,70 317,70" fill="#F9504B"/>
+            <!-- Dot on line -->
+            <circle cx="310" cy="82" r="6" fill="#F9504B"/>
+            <!-- Shatter effect -->
+            <line x1="310" y1="62" x2="295" y2="52" stroke="rgba(249,80,75,.5)" stroke-width="1.5"/>
+            <line x1="310" y1="62" x2="325" y2="50" stroke="rgba(249,80,75,.5)" stroke-width="1.5"/>
+            <line x1="310" y1="62" x2="330" y2="60" stroke="rgba(249,80,75,.4)" stroke-width="1.5"/>
+            <line x1="310" y1="62" x2="290" y2="54" stroke="rgba(249,80,75,.4)" stroke-width="1.5"/>
+            <!-- Area under line -->
+            <path d="M90,170 L130,155 L170,140 L210,120 L250,100 L290,85 L310,80 L310,175 L90,175 Z" fill="rgba(249,80,75,.06)"/>
+            <!-- Person silhouette looking up -->
+            <circle cx="170" cy="95" r="16" fill="rgba(255,255,255,.12)"/>
+            <rect x="158" y="110" width="24" height="40" rx="7" fill="rgba(255,255,255,.1)"/>
+            <text x="240" y="15" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-family="Inter,sans-serif" font-size="11" letter-spacing="2">ГОТОВ К СЛЕДУЮЩЕМУ УРОВНЮ</text>
+          </svg>
+        </div>
+        <div class="seg-body">
+          <div class="seg-title">Предприниматель, который вырос из своего бизнеса и больше не хочет быть его самым узким местом</div>
+          <div class="seg-divider"></div>
+          <div class="seg-tag">Главная боль</div>
+          <p class="seg-text">Страх масштабирования. Вы готовы честно признать ошибки и строить фундамент — но не знаете, с чего начать.</p>
+          <div class="seg-result">
+            <div class="seg-result-label">Что изменится</div>
+            <p>Вы смените роль «исполнителя» на роль «стратега». Мы вместе пересоберём фундамент, чтобы бизнес рос в 2026 году без сбоев.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="seg-cta">
+      <p>Узнали себя? Присоединяйтесь!</p>
+      <button class="btn btn-coral btn-lg" onclick="openModal()">Занять место →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     STEPS
+══════════════════════════════════════ -->
+<section id="steps">
+  <div class="container">
+    <div class="eyebrow">Что изменится</div>
+    <h2 class="section-h">5 недель, которые изменят ваш подход к управлению</h2>
+    <p class="section-p">Это не теоретический курс. Это практикум, где вы своими руками пересоберёте фундамент бизнеса.</p>
+
+    <div class="steps-list">
+      <div class="step-row">
+        <div class="step-n">01</div>
+        <div>
+          <div class="step-h">Фокус на сдвиговых действиях</div>
+          <p class="step-p">Мы уберём «шумовые» задачи, которые создают видимость работы. Вы выберете 4 критические точки (маркетинг, продажи, финансы, команда) и определите конкретные действия, которые обеспечат рывок.</p>
+          <div class="step-result"><div class="step-arr">→</div><p>Ваш календарь заполнен не «текучкой», а задачами, которые двигают бизнес к целям 2026 года.</p></div>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-n">02</div>
+        <div>
+          <div class="step-h">Установка системы «боевых» метрик</div>
+          <p class="step-p">Хватит смотреть на отчёты «постфактум». Мы настроим дашборды так, чтобы вы видели просадки в реальном времени и могли корректировать курс, пока конкуренты только начинают замечать проблему.</p>
+          <div class="step-result"><div class="step-arr">→</div><p>У вас в руках панель управления, где понятно, в какой зоне бизнеса прямо сейчас нужен ваш «удар».</p></div>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-n">03</div>
+        <div>
+          <div class="step-h">Настройка управленческого ритма</div>
+          <p class="step-p">Атака захлёбывается, если команда не синхронизирована. Мы внедрим ритм совещаний, где каждое обсуждение заканчивается не «общим вдохновением», а конкретным решением и ответственным.</p>
+          <div class="step-result"><div class="step-arr">→</div><p>Команда работает как единый механизм, чётко следуя выбранной вами стратегии.</p></div>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-n">04</div>
+        <div>
+          <div class="step-h">Переход от интуиции к точному расчёту</div>
+          <p class="step-p">Вы перестанете принимать решения «на глаз» или потому что «так принято». Через мастер-майнды и разборы вы научитесь мыслить как архитектор системы.</p>
+          <div class="step-result"><div class="step-arr">→</div><p>Ваша компетентность как владельца вырастает: вы больше не «пожарный», вы — стратег, который управляет развитием.</p></div>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-n">05</div>
+        <div>
+          <div class="step-h">Road Map наступления на 2026 год</div>
+          <p class="step-p">Вы не просто «послушаете» — вы спроектируете путь от хаоса к масштабу. Ваш личный план: что внедрять завтра, что через неделю, чтобы занять новые сегменты рынка.</p>
+          <div class="step-result"><div class="step-arr">→</div><p>Пошаговый алгоритм, с которым компания входит в атаку и не сбавляет темп. Мы продаём не свободу от работы — а точность управления.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="steps-cta">
+      <button class="btn btn-coral btn-lg" onclick="openModal()">Принять участие в интенсиве →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     CALENDAR
+══════════════════════════════════════ -->
+<section id="calendar">
+  <div class="container">
+    <div class="eyebrow">Календарь программы</div>
+    <h2 class="section-h">Ваши 5 недель по шагам</h2>
+    <p class="section-p">Минимум теории — максимум действий в вашем бизнесе прямо во время программы.</p>
+
+    <div class="cal-grid">
+      <!-- Неделя 1 -->
+      <div class="cal-card">
+        <div class="cal-head"><div class="cal-wk">Неделя 1</div><div class="cal-dates">12–18 мая</div><div class="cal-theme">Оптимизация и фокусировка</div></div>
+        <div class="cal-body">
+          <div class="cal-event">
+            <div class="cal-event-type">Семинар</div>
+            <div class="cal-event-title">«Как правильно определять приоритетные задачи (модель RICE)»</div>
+            <div class="cal-event-speaker">Илья Балахнин</div>
+            <div class="cal-event-time">12 мая, 16:00–18:00 по мск</div>
+          </div>
+          <div class="cal-event">
+            <div class="cal-event-type">Встреча с экспертом</div>
+            <div class="cal-event-title">«Как выделить время на развитие бизнеса»</div>
+            <div class="cal-event-speaker">Андрей Муравьев</div>
+            <div class="cal-event-time">14 мая, 16:00–17:30 по мск</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Неделя 2 -->
+      <div class="cal-card">
+        <div class="cal-head"><div class="cal-wk">Неделя 2</div><div class="cal-dates">19–25 мая</div><div class="cal-theme">Команда</div></div>
+        <div class="cal-body">
+          <div class="cal-event">
+            <div class="cal-event-type">Семинар</div>
+            <div class="cal-event-title">«С помощью каких метрик отслеживать результат»</div>
+            <div class="cal-event-speaker">Илья Балахнин</div>
+            <div class="cal-event-time">19 мая, 16:00–18:00 по мск</div>
+          </div>
+          <div class="cal-event">
+            <div class="cal-event-type">Встреча с экспертом</div>
+            <div class="cal-event-title">«Найм и управление командой»</div>
+            <div class="cal-event-speaker">Ирина Савицких</div>
+            <div class="cal-event-time">21 мая, 16:00–17:30 по мск</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Неделя 3 -->
+      <div class="cal-card">
+        <div class="cal-head"><div class="cal-wk">Неделя 3</div><div class="cal-dates">26 мая – 1 июня</div><div class="cal-theme">Маркетинг</div></div>
+        <div class="cal-body">
+          <div class="cal-event">
+            <div class="cal-event-type">Семинар</div>
+            <div class="cal-event-title">«Какие дашборды и отчёты нужны для анализа ситуации?»</div>
+            <div class="cal-event-speaker">Илья Балахнин</div>
+            <div class="cal-event-time">26 мая, 16:00–18:00 по мск</div>
+          </div>
+          <div class="cal-event">
+            <div class="cal-event-type">Встреча с экспертом</div>
+            <div class="cal-event-title">«Маркетинг: привлечение клиентов»</div>
+            <div class="cal-event-speaker">Дмитрий Гарбузов</div>
+            <div class="cal-event-time">28 мая, 16:00–17:30 по мск</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Неделя 4 -->
+      <div class="cal-card">
+        <div class="cal-head"><div class="cal-wk">Неделя 4</div><div class="cal-dates">2–8 июня</div><div class="cal-theme">Продажи</div></div>
+        <div class="cal-body">
+          <div class="cal-event">
+            <div class="cal-event-type">Семинар</div>
+            <div class="cal-event-title">«Как выстроить координацию с командой для эффективного достижения целей?»</div>
+            <div class="cal-event-speaker">Илья Балахнин</div>
+            <div class="cal-event-time">2 июня, 16:00–18:00 по мск</div>
+          </div>
+          <div class="cal-event">
+            <div class="cal-event-type">Встреча с экспертом</div>
+            <div class="cal-event-title">«Продажи: системный подход»</div>
+            <div class="cal-event-speaker">Анна Барна</div>
+            <div class="cal-event-time">4 июня, 16:00–17:30 по мск</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Неделя 5 -->
+      <div class="cal-card">
+        <div class="cal-head"><div class="cal-wk">Неделя 5</div><div class="cal-dates">9–15 июня</div><div class="cal-theme">Финансы</div></div>
+        <div class="cal-body">
+          <div class="cal-event">
+            <div class="cal-event-type">Семинар</div>
+            <div class="cal-event-title">«Как составить план боя на 2026-й год и не откатиться назад?»</div>
+            <div class="cal-event-speaker">Илья Балахнин</div>
+            <div class="cal-event-time">9 июня, 16:00–18:00 по мск</div>
+          </div>
+          <div class="cal-event">
+            <div class="cal-event-type">Встреча с экспертом</div>
+            <div class="cal-event-title">«Финансы: модель и контроль показателей»</div>
+            <div class="cal-event-speaker">Ирина Ведергорн</div>
+            <div class="cal-event-time">11 июня, 16:00–17:30 по мск</div>
+          </div>
+        </div>
+      </div>
+      <div class="cal-card finale">
+        <div class="cal-head"><div class="cal-wk">Финал</div><div class="cal-dates">16 июня</div><div class="cal-theme">Дорожная карта на 2026 год</div></div>
+        <div class="cal-body">
+          <div class="finale-text">
+            <h3>Итоги 5 недель</h3>
+            <p>Формирование списка ключевых фокусных задач до конца года</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cal-cta">
+      <button class="btn btn-coral btn-lg" onclick="openModal()">Занять место →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     AUTHORS
+══════════════════════════════════════ -->
+<section id="authors">
+  <div class="container">
+    <div class="eyebrow">Авторы программы</div>
+    <h2 class="section-h">Авторы и ведущие программы</h2>
+
+    <div class="authors-grid">
+
+      <!-- ILYA -->
+      <div class="author-card">
+        <div class="author-photo">
+          <img id="ilya-img" alt="Илья Балахнин">
+        </div>
+        <div class="author-body">
+          <div class="author-name">Илья Балахнин</div>
+          <ul class="author-list">
+            <li>Основатель консалтингового агентства Paper Planes (16 лет)</li>
+            <li>Практикующий стратег и бизнес-архитектор</li>
+            <li>Автор книг и научных подходов к управлению бизнесом</li>
+            <li>Реализовал более 800 проектов в маркетинге, digital и HR-стратегиях</li>
+          </ul>
+          <a href="https://t.me/ilia_balahnin" target="_blank" class="btn-contact">Написать Илье →</a>
+        </div>
+      </div>
+
+      <!-- ANDREY -->
+      <div class="author-card">
+        <div class="author-photo">
+          <img id="andrey-img" alt="Андрей Муравьев">
+        </div>
+        <div class="author-body">
+          <div class="author-name">Андрей Муравьев</div>
+          <ul class="author-list">
+            <li>Основатель и ведущий школы бизнеса «Стрела»</li>
+            <li>Предприниматель, управленец и маркетолог с опытом 15 лет</li>
+            <li>Экс-коммдир «Нескучных финансов»</li>
+            <li>Автор книг и образовательных программ для собственников бизнеса</li>
+            <li>Бизнес-коуч и консультант</li>
+          </ul>
+          <a href="https://t.me/m/8pewoP_7N2Fi" target="_blank" class="btn-contact">Написать Андрею →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     BONUSES (теперь перед FAQ)
+══════════════════════════════════════ -->
+<section id="bonuses">
+  <div class="container">
+    <div class="bonuses-grid">
+
+      <div>
+        <div class="eyebrow">Старт потока: 12 мая</div>
+        <h2 class="section-h">Забронируйте место и получите доступ к подготовительным материалам</h2>
+        <ul class="bonus-list">
+          <li><div class="bonus-ico">✓</div><span>Личная консультация автора программы</span></li>
+          <li><div class="bonus-ico">✓</div><span>Подготовительный курс «Быть предпринимателем»</span></li>
+          <li><div class="bonus-ico">✓</div><span>Скидка 20% на мероприятия «Стрелы»</span></li>
+          <li><div class="bonus-ico">✓</div><span>За 30 минут в ZOOM получите краткий разбор вашей ситуации и план действий от автора курса</span></li>
+        </ul>
+        <button class="btn btn-coral btn-lg" onclick="openModal()">Записаться →</button>
+      </div>
+
+      <div class="bonuses-photo">
+        <img id="bonuses-img" alt="Илья Балахнин и Андрей Муравьев">
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     FAQ (теперь после Bonuses)
+══════════════════════════════════════ -->
+<section id="faq">
+  <div class="container">
+    <div class="eyebrow">Частые вопросы</div>
+    <h2 class="section-h">Частые вопросы и возражения</h2>
+
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <div class="faq-q-text">Откуда мне взять столько времени на обучение?</div>
+          <div class="faq-ico">+</div>
+        </div>
+        <div class="faq-a"><div class="faq-a-in">Продолжительность и интенсивность программы — гарантия результата. Нигде больше вы не сможете выделить столько времени на целенаправленное развитие своего бизнеса. Если у вас мало времени (как и у большинства участников), участвуйте в основных форматах: занятие + домашнее задание + встреча с куратором. Это займёт около 5 часов в неделю.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <div class="faq-q-text">Это живой курс или запись?</div>
+          <div class="faq-ico">+</div>
+        </div>
+        <div class="faq-a"><div class="faq-a-in">Вся программа проходит вживую в онлайне. Дополнительно вам будут предложены курсы и лекции в записи.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <div class="faq-q-text">Что если я не хочу заниматься операционкой?</div>
+          <div class="faq-ico">+</div>
+        </div>
+        <div class="faq-a"><div class="faq-a-in">Смотря что вы вкладываете в понятие «операционка». Если вы представляете жизнь вне операционки как «балдеть на пляже с пина-коладой», то вряд ли вам подойдёт эта программа. Если же вы о том, что не хотите выполнять какую-то работу, то вы и не обязаны. Но управлять операционно обязаны — иначе без управления ключевые процессы развалятся.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <div class="faq-q-text">Будете ли вы внедрять за меня инструменты?</div>
+          <div class="faq-ico">+</div>
+        </div>
+        <div class="faq-a"><div class="faq-a-in">Нет. Всё будете делать вы с нашей поддержкой. Не переживайте: в программе достаточно контекста, чтобы вы разобрались во всём — поддержка авторов, консультантов, одногруппников, опытных предпринимателей и экспертов.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <div class="faq-q-text">Что если у меня не получится?</div>
+          <div class="faq-ico">+</div>
+        </div>
+        <div class="faq-a"><div class="faq-a-in">Такое возможно, если вы ничего не будете делать, не будете задавать вопросы, будете отсиживаться в эфире. Если же вы будете делать то, что мы предлагаем и работать над системой своего бизнеса — за полгода вы не узнаете ни себя, ни компанию. Если хотите результат — вы его обязательно получите.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <div class="faq-q-text">Где получить более подробную информацию о программе?</div>
+          <div class="faq-ico">+</div>
+        </div>
+        <div class="faq-a"><div class="faq-a-in">На сайте мы постарались в двух словах рассказать о программе. Если вас заинтересовало и остались вопросы — запишитесь на 30-минутную встречу в ZOOM с автором программы Андреем Муравьевым. Познакомитесь лично, зададите вопросы, получите персональные рекомендации.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     FOOTER
+══════════════════════════════════════ -->
+<footer id="footer">
+  <div class="container">
+    <div class="footer-top">
+
+      <!-- Brand block -->
+      <div class="footer-brand">
+        <div class="footer-logo-wrap">
+          <!-- Стрела arrow icon (SVG из основного сайта) -->
+          <div class="footer-arrow-icon">
+            <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="36" height="36" rx="8" fill="var(--coral)"/>
+              <path d="M10 18H26M26 18L19 11M26 18L19 25" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="footer-logo-text">
+            <div class="footer-logo-name">СТРЕЛА <em>→</em></div>
+          </div>
+        </div>
+        <div class="footer-logo-sub">
+          Школа предпринимателей<br>малого бизнеса<br>
+          <span style="color:rgba(255,255,255,.6)">by Paper Planes (Бумажные Самолётики)</span>
+        </div>
+
+        <!-- Telegram button -->
+        <a href="https://t.me/strela_hero" target="_blank" class="footer-tg-btn">
+          <!-- Telegram icon -->
+          <svg class="footer-tg-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.93 6.79l-1.68 7.92c-.12.55-.46.68-.93.43l-2.58-1.9-1.24 1.2c-.14.13-.25.25-.5.25l.18-2.6 4.68-4.22c.2-.18-.05-.28-.32-.1L7.27 14.16l-2.54-.79c-.55-.17-.56-.55.12-.82l9.91-3.82c.46-.17.86.11.71.82-.01 0-.01-.01 0 0l.46-.76z" fill="white"/>
+          </svg>
+          Написать в Telegram
+        </a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Программа</h4>
+        <ul>
+          <li><a href="#segments">Для кого</a></li>
+          <li><a href="#steps">Что изменится</a></li>
+          <li><a href="#calendar">Календарь</a></li>
+          <li><a href="#authors">Авторы</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Участие</h4>
+        <ul>
+          <li><a href="javascript:void(0)" onclick="openModal()">Записаться</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="javascript:void(0)" onclick="openModal()">Консультация</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Контакты</h4>
+        <ul>
+          <li><a href="mailto:info@strela-school.ru">info@strela-school.ru</a></li>
+          <li><a href="tel:+79034505894">+7 903 450-58-94</a></li>
+          <li><a href="https://strela-school.ru/privacy" target="_blank">Политика конфиденциальности</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- Bottom legal -->
+    <div class="footer-btm">
+      <div class="footer-contacts">
+        г. Москва, ул. 2-я Брестская, д. 30 &nbsp;·&nbsp;
+        <a href="mailto:info@strela-school.ru">info@strela-school.ru</a> &nbsp;·&nbsp;
+        <a href="tel:+79034505894">+7 903 450-58-94</a>
+      </div>
+      <div class="footer-legal">
+        <div class="footer-legal-text">
+          Стрела — индивидуальный предприниматель Балахнин Илья Александрович.<br>
+          ИНН 772882680390 &nbsp;·&nbsp; ОГРНИП 310774623200276
+        </div>
+        <div class="footer-legal-text">
+          <a href="https://strela-school.ru/privacy" target="_blank">Политика обработки персональных данных</a>
+          &nbsp;·&nbsp; © 2026 Школа «Стрела»
+        </div>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════════
+     SCRIPTS
+══════════════════════════════════════ -->
+<script>
+  /* ── Set image sources with proper encoding ── */
+  (function setImages() {
+    var files = {
+      'hero-img':    'Илья + Андрей.png',
+      'ilya-img':    'Илья Балахнин.png',
+      'andrey-img':  'Андрей Муравьев-edited-free (carve.photos).png',
+      'bonuses-img': 'Илья + Андрей.png'
+    };
+    Object.keys(files).forEach(function(id) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      /* encode only the tricky chars; keep Cyrillic as-is for local file open */
+      var name = files[id].replace(/ /g,'%20').replace(/\+/g,'%2B').replace(/\(/g,'%28').replace(/\)/g,'%29');
+      el.src = name;
+      el.onerror = function() {
+        var ph = document.createElement('div');
+        ph.className = el.parentElement.className.includes('hero') ? 'hero-photo-ph' : 'bonuses-photo-ph';
+        ph.style.cssText = 'display:flex;align-items:center;justify-content:center;width:100%;height:100%;color:rgba(255,255,255,.2);font-size:13px;background:linear-gradient(140deg,#000826,#0e1733)';
+        ph.textContent = el.alt;
+        el.parentElement.replaceChild(ph, el);
+      };
+    });
+  })();
+
+  /* ── Countdown ── */
+  (function countdown() {
+    var deadline = new Date('2026-04-30T23:59:59');
+    function tick() {
+      var diff = deadline - new Date();
+      if (diff <= 0) {
+        var box = document.querySelector('.countdown-box');
+        if (box) box.innerHTML = '<div class="cd-label" style="color:rgba(255,255,255,.7)">Специальное предложение завершено</div>';
+        return;
+      }
+      var p = function(v){ return String(v).padStart(2,'0'); };
+      document.getElementById('cd-d').textContent = p(Math.floor(diff/86400000));
+      document.getElementById('cd-h').textContent = p(Math.floor(diff%86400000/3600000));
+      document.getElementById('cd-m').textContent = p(Math.floor(diff%3600000/60000));
+      document.getElementById('cd-s').textContent = p(Math.floor(diff%60000/1000));
+    }
+    tick(); setInterval(tick, 1000);
+  })();
+
+  /* ── Modal ── */
+  function openModal() {
+    document.getElementById('modal-overlay').classList.add('open');
+    document.getElementById('modal-box').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    document.getElementById('modal-overlay').classList.remove('open');
+    document.getElementById('modal-box').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  /* ── FAQ accordion ── */
+  function toggleFaq(btn) {
+    var item = btn.parentElement;
+    var isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(function(el){ el.classList.remove('open'); });
+    if (!isOpen) item.classList.add('open');
+  }
+
+  /* ── Header shadow on scroll ── */
+  window.addEventListener('scroll', function() {
+    document.getElementById('header').classList.toggle('scrolled', window.scrollY > 10);
+  });
+
+  /* ── Form submit ── */
+  function handleSubmit(e) {
+    e.preventDefault();
+    var f = e.target;
+    /* TODO: замените console.log на fetch() к Lovable Cloud */
+    console.log({ name:f.name.value, phone:f.phone.value, website:f.website.value, revenue:f.revenue.value });
+    document.getElementById('mainForm').innerHTML =
+      '<div style="text-align:center;padding:32px 0">' +
+      '<div style="font-size:52px;margin-bottom:16px">✅</div>' +
+      '<h3 style="font-family:Montserrat,sans-serif;font-size:22px;color:#000826;margin-bottom:10px">Заявка принята!</h3>' +
+      '<p style="color:#9BA3B2;font-size:15px;line-height:1.65">Мы свяжемся с вами в течение рабочего дня для подтверждения записи на диагностику.</p>' +
+      '</div>';
+  }
+</script>
+
+</body>
+</html>
